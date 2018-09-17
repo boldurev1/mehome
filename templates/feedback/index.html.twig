@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="example-wrapper">
+        <h1>Свяжитесь с нами</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.name) }}
+
+            <div class="form-group">
+                {{ form_label(form.email) }}
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    {{ form_widget(form.email) }}
+                </div>
+            </div>
+
+            {{ form_row(form.message) }}
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

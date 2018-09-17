@@ -20,18 +20,17 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    /**
-     * @route("/products/{id}", name="products_show", requirements={"id"="\d+"})
-     * @ParamConverter("product", options={"mapping"={"id"="id"}})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
+	/**
+	 * @Route("/products/{id}", name="products_show", requirements={"id"="\d+"})
+	 * @ParamConverter("product", options={"mapping"={"id"="id"}})
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
     public function show(Product $product)
-    {
-        return $this->render('products/show.html.twig',[
-            'product' => $product
-        ]);
-    }
+	{
+		return $this->render('products/show.html.twig', [
+			'product' => $product
+		]);
+	}
 
 }

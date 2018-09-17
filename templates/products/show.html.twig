@@ -1,18 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Страница товара{% endblock %}
+
 {% block body %}
-    <h1>{{ product.name }}</h1>
-   <p>{{  product.description }}</p>
-    <p>Price{{ product.price }}</p>
+	<h1>{{ product.name }}</h1>
 
-    {%  if product.isTop %}
-           <p>Top</p>
-    {% endif %}
+	<p>{{ product.description }}</p>
+	<p>Цена: {{ product.price }}</p>
 
-     <a href="{{ path('homepage') }}">На главную</a>
-{% endblock %}
+	{% if product.isTop %}
+		<p>Топчик!</p>
+	{% endif %}
 
-{% block title %}
-
+	<a href="{{ path('homepage') }}">на главную</a>
 {% endblock %}
 

@@ -1,0 +1,18 @@
+services:
+  App\Admin\CategoriesAdmin:
+    arguments: [~, App\Entity\Category, ~]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Категории, group: Ассортимент }
+    public: true
+
+  App\Admin\ProductsAdmin:
+    arguments: [~, App\Entity\Product, ~]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Товары, group: Ассортимент }
+    public: true
+
+  App\Admin\FeedbacksRequestAdmin:
+    arguments: [~, App\Entity\FeedbackRequest, ~]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Обратная связь, group: Клиенты }
+    public: true

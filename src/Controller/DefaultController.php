@@ -11,11 +11,11 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(Products $productsServise)
+    public function index(Products $productsService)
     {
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'products' => $productsServise->getTop(),
+			'products' => $productsService->getTop(),
         ]);
     }
 }
