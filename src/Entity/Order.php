@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Entity
  */
 class Order
 {
@@ -42,10 +44,14 @@ class Order
     private $order_price;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\OrderItem", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="or", cascade={"persist", "remove"})
      */
-    private $orderitem;
+    private $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,15 +118,32 @@ class Order
         return $this;
     }
 
-    public function getOrderitem(): ?OrderItem
+    public function getItems()
     {
-        return $this->orderitem;
+        return $this->items;
     }
 
-    public function setOrderitem(OrderItem $orderitem): self
+    public function addItem(OrderItem $item): self
     {
-        $this->orderitem = $orderitem;
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setOrder($this);
+        }
 
         return $this;
     }
+
+    public function removeItem(OrderItem $item): self
+    {
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+            // set the owning side to null (unless already changed)
+            if ($item->getOrder() === $this) {
+                $item->setOrder(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

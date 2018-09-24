@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @ORM\Entity
  */
 class OrderItem
 {
@@ -17,6 +17,13 @@ class OrderItem
     private $id;
 
     /**
+     * @var Order
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     */
+    private $order;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $product;
@@ -24,7 +31,7 @@ class OrderItem
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $number_of_ordered_items;
+    private $numberOfOrderedItems;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -55,14 +62,23 @@ class OrderItem
 
     public function getNumberOfOrderedItems(): ?string
     {
-        return $this->number_of_ordered_items;
+        return $this->numberOfOrderedItems;
     }
 
-    public function setNumberOfOrderedItems(string $number_of_ordered_items): self
+    public function setNumberOfOrderedItems(string $numberOfOrderedItems): self
     {
-        $this->number_of_ordered_items = $number_of_ordered_items;
+        $this->numberOfOrderedItems = $numberOfOrderedItems;
 
         return $this;
+    }
+
+    public function addQuantity(int $quantity): self
+    {
+
+        $this->numberOfOrderedItems += $quantity;
+
+        return $this;
+
     }
 
     public function getPrice(): ?string
@@ -85,6 +101,18 @@ class OrderItem
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?Order $order): self
+    {
+        $this->order = $order;
 
         return $this;
     }
